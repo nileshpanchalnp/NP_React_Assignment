@@ -133,77 +133,80 @@ export default function BidList() {
           <table className="w-full  border-collapse">
             <thead>
               <tr className="border-b rounded-xl text-left text-sm table-header-color font-medium text-white">
-                <th className="whitespace-nowrap  px-6 py-4">S No.</th>
-                <th className="whitespace-nowrap px-6 py-4">
+                <th className="whitespace-nowrap  px-3 py-4">S No.</th>
+                <th className="whitespace-nowrap px-3 py-4">
                   Bid Number <br /> create by
                 </th>
 
-                <th className="whitespace-nowrap px-6 py-4">
+                <th className="whitespace-nowrap px-3 py-4">
                   Start Date <br /> & Time
                 </th>
-                <th className="whitespace-nowrap px-6 py-4">
+                <th className="whitespace-nowrap px-3 py-4">
                   Bid Time <br /> Remaining
                 </th>
-                <th className="whitespace-nowrap px-6 py-4 ">
+                <th className="whitespace-nowrap px-3 py-4 ">
                   From city <br />
                   to city
                 </th>
-                {/* <th className="whitespace-nowrap px-6 py-4">To city</th> */}
-                <th className="whitespace-nowrap px-6 py-4">
+                {/* <th className="whitespace-nowrap px-3 py-4">To city</th> */}
+                <th className="whitespace-nowrap px-3 py-4">
                   Vehicle Type, <br /> Size, Body,
                   <br /> No. of Vehicle
                 </th>
-                {/* <th className="whitespace-nowrap px-6 py-4"></th> */}
-                {/* <th className="whitespace-nowrap px-6 py-4">Created By</th> */}
-                <th className="whitespace-nowrap px-6 py-4">Response</th>
-                <th className="whitespace-nowrap px-6 py-4">
+                {/* <th className="whitespace-nowrap px-3 py-4"></th> */}
+                {/* <th className="whitespace-nowrap px-3 py-4">Created By</th> */}
+                <th className="whitespace-nowrap px-3 py-4">Response</th>
+                <th className="whitespace-nowrap px-3 py-4">
                   Assigned <br /> Staff
                 </th>
-                {/* <th className="whitespace-nowrap px-6 py-4">Details</th> */}
-                <th className="whitespace-nowrap px-6 py-4">
+                {/* <th className="whitespace-nowrap px-3 py-4">Details</th> */}
+                <th className="whitespace-nowrap px-3 py-4">
                   Material <br /> Weight <br />
                   (in Kg)
                 </th>
-                <th className="whitespace-nowrap px-6 py-4">Actions</th>
+                <th className="whitespace-nowrap px-3 py-4">Actions</th>
               </tr>
             </thead>
             <tbody>
               {bids.map((bid) => (
                 <React.Fragment key={bid.id}>
                   <tr className="border-b text-sm font-semibold">
-                    <td className="px-6 py-4">{bid.id}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-4">{bid.id}</td>
+                    <td className="px-3 py-4">
                       {bid.bidNumber} <br /> {bid.createdBy}
                     </td>
 
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-4">
                       {bid.date}
                       <br />
                       {bid.time}
                     </td>
-                    <td className="px-6 py-4 text-orange-500">
+                    <td className="px-3 py-4 text-orange-500">
                       {bid.remaining}
                     </td>
-                    <td className="px-6 py-4">
-                      {bid.fromCity} &nbsp; &nbsp; &nbsp; &nbsp;{" "}
+                    <td className="px-3 py-4">
+                      {bid.fromCity} <br /> &nbsp; &nbsp;&nbsp;
                       <i class="bi bi-arrow-down"></i> <br />
                       {bid.toCity}
                     </td>
-                    {/* <td className="px-6 py-4"></td> */}
-                    <td className="px-6 py-4">
+                    {/* <td className="px-3 py-4"></td> */}
+                    <td className="px-3 py-4">
                       {bid.vehicleType} <br /> {bid.body}, {bid.vehicles}
                     </td>
-                    {/* <td className="px-6 py-4"></td> */}
-                    {/* <td className="px-6 py-4">{bid.createdBy}</td> */}
-                    <td className="px-6 py-4">
+                    {/* <td className="px-3 py-4"></td> */}
+                    {/* <td className="px-3 py-4">{bid.createdBy}</td> */}
+                    <td className="px-3 py-4">
                       <button className="text-blue-600 hover:underline">
                         {bid.responses} View results
                       </button>
                     </td>
-                    <td className="px-6 py-4">{bid.assignedStaff}</td>
-                    {/* <td className="px-6 py-4">{bid.staffId}</td> */}
-                    <td className="px-6 py-4">{bid.weight}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-4">
+                      {bid.assignedStaff} <br />
+                      {bid.staffId}
+                    </td>
+                    {/* <td className="px-3 py-4">{bid.staffId}</td> */}
+                    <td className="px-3 py-4">{bid.weight}</td>
+                    <td className="px-3 py-4">
                       <button
                         onClick={() =>
                           setShowDetails(showDetails === bid.id ? null : bid.id)
@@ -232,10 +235,15 @@ export default function BidList() {
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3 }}
-                            className="overflow-hidden bg-gray-50"
+                            className="overflow-hidden bg-sky-100"
                           >
-                            <div className="grid gap-6 p-6 md:grid-cols-2">
+                            <div className="grid gap-6 p-6 md:grid-cols-4">
                               <div className="space-y-4">
+                                <div>
+                                  <h3 className="font-medium text-gray-900">
+                                    Bid No: {bid.bidNumber} ({bid.createdBy})
+                                  </h3>
+                                </div>
                                 <div>
                                   <h3 className="font-medium text-gray-900">
                                     Loading Point:
@@ -252,11 +260,7 @@ export default function BidList() {
                                     {bid.unloadingPoint}
                                   </p>
                                 </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Bid No: {bid.bidNumber} ({bid.createdBy})
-                                  </h3>
-                                </div>
+
                                 <div>
                                   <h3 className="font-medium text-gray-900">
                                     Number of Bidders for this Bid:{" "}
@@ -271,78 +275,86 @@ export default function BidList() {
                               </div>
                               <div className="space-y-4">
                                 <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Assigned Staff:
-                                  </h3>
-                                  <p className="text-gray-600">
-                                    {bid.assignedStaff}
+                                  <p className="font-medium text-gray-900">
+                                    <i class="bi bi-person-fill"></i> Assigned
+                                    Staff :{" "}
+                                    <span className="text-sky-600">
+                                      {bid.assignedStaff}
+                                    </span>
                                   </p>
                                 </div>
                                 <div>
                                   <h3 className="font-medium text-gray-900">
-                                    Phone number:
+                                    <i class="bi bi-telephone-fill"></i> Phone
+                                    number:{" "}
+                                    <span className="text-sky-600">
+                                      {bid.phoneNumber}
+                                    </span>
                                   </h3>
-                                  <p className="text-gray-600">
-                                    {bid.phoneNumber}
-                                  </p>
                                 </div>
                                 <div>
                                   <h3 className="font-medium text-gray-900">
-                                    Vehicle loading date:
+                                    <i class="bi bi-calendar2-event-fill"></i>{" "}
+                                    Vehicle loading date:{" "}
+                                    <span className="text-sky-600">
+                                      {bid.vehicleLoadingDate}
+                                    </span>
                                   </h3>
-                                  <p className="text-gray-600">
-                                    {bid.vehicleLoadingDate}
-                                  </p>
                                 </div>
                                 <div>
                                   <h3 className="font-medium text-gray-900">
-                                    Vehicle Type:
+                                    <i class="bi bi-truck"></i> Vehicle Type:{" "}
+                                    <span className="text-sky-600">
+                                      {bid.vehicleDetails} ({bid.fuelType})
+                                    </span>
                                   </h3>
-                                  <p className="text-gray-600">
-                                    {bid.vehicleDetails} ({bid.fuelType})
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="space-y-4">
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Material:
-                                  </h3>
-                                  <p className="text-gray-600">
-                                    {bid.material}
-                                  </p>
-                                </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Weight:
-                                  </h3>
-                                  <p className="text-gray-600">
-                                    {bid.materialWeight}
-                                  </p>
                                 </div>
                               </div>
                               <div className="space-y-4">
                                 <div>
                                   <h3 className="font-medium text-gray-900">
-                                    Request Date:
+                                    <i class="bi bi-box-seam-fill"></i>{" "}
+                                    Material:{" "}
+                                    <sky className="text-sky-600">
+                                      {bid.material}
+                                    </sky>
                                   </h3>
-                                  <p className="text-gray-600">
-                                    {bid.requestDate}
-                                  </p>
                                 </div>
                                 <div>
                                   <h3 className="font-medium text-gray-900">
-                                    Expiry Date:
+                                    Weight:{" "}
+                                    <span className="text-sky-600">
+                                      {bid.materialWeight}
+                                    </span>
                                   </h3>
-                                  <p className="text-gray-600">
-                                    {bid.expiryDate}
-                                  </p>
+                                </div>
+                              </div>
+                              <div className="space-y-4">
+                                <div>
+                                  <h3 className="font-medium text-gray-900">
+                                    <i class="bi bi-calendar2-event-fill"></i>{" "}
+                                    Request Date:{" "}
+                                    <span className="text-sky-600">
+                                      {bid.requestDate}
+                                    </span>
+                                  </h3>
                                 </div>
                                 <div>
                                   <h3 className="font-medium text-gray-900">
-                                    Remarks:
+                                    <i class="bi bi-calendar2-event-fill"></i>{" "}
+                                    Expiry Date:{" "}
+                                    <span className="text-sky-600">
+                                      {bid.expiryDate}
+                                    </span>
                                   </h3>
-                                  <p className="text-gray-600">{bid.remarks}</p>
+                                </div>
+                                <div>
+                                  <h3 className="font-medium text-gray-900">
+                                    Remarks:{" "}
+                                    <span className="text-sky-600">
+                                      {bid.remarks}
+                                    </span>
+                                  </h3>
                                 </div>
                               </div>
                             </div>
