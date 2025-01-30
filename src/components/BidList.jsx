@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Calendar, Search, ChevronDown, ChevronUp } from "lucide-react";
+import "./Custom.css";
+import { Calendar, Search, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -57,7 +58,7 @@ export default function BidList() {
               onClick={() => navigate("/create-bid")}
               className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Create
+              Create <i class="bi bi-plus-square-fill"></i>
             </button>
             <div className="flex rounded-lg bg-white shadow">
               <button
@@ -99,7 +100,7 @@ export default function BidList() {
                 onClick={() => setShowCalendar(!showCalendar)}
                 className="flex items-center gap-2 rounded-lg border bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
               >
-                <Calendar className="h-4 w-4" />
+                <Calendar className="h-4 w-4 " />
                 <span>Today</span>
                 <ChevronDown className="h-4 w-4" />
               </button>
@@ -129,38 +130,52 @@ export default function BidList() {
       {/* Bids Table */}
       <div className="rounded-lg bg-white shadow">
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full  border-collapse">
             <thead>
-              <tr className="border-b text-left text-sm font-medium text-gray-600">
-                <th className="whitespace-nowrap px-6 py-4">S No.</th>
+              <tr className="border-b rounded-xl text-left text-sm table-header-color font-medium text-white">
+                <th className="whitespace-nowrap  px-6 py-4">S No.</th>
                 <th className="whitespace-nowrap px-6 py-4">
-                  Start Date & Time
+                  Bid Number <br /> create by
+                </th>
+
+                <th className="whitespace-nowrap px-6 py-4">
+                  Start Date <br /> & Time
                 </th>
                 <th className="whitespace-nowrap px-6 py-4">
-                  Bid Time Remaining
+                  Bid Time <br /> Remaining
                 </th>
-                <th className="whitespace-nowrap px-6 py-4">From city</th>
-                <th className="whitespace-nowrap px-6 py-4">To city</th>
+                <th className="whitespace-nowrap px-6 py-4 ">
+                  From city <br />
+                  to city
+                </th>
+                {/* <th className="whitespace-nowrap px-6 py-4">To city</th> */}
                 <th className="whitespace-nowrap px-6 py-4">
-                  Vehicle Type, Size
+                  Vehicle Type, <br /> Size, Body,
+                  <br /> No. of Vehicle
                 </th>
-                <th className="whitespace-nowrap px-6 py-4">
-                  Body, No. of Vehicle
-                </th>
-                <th className="whitespace-nowrap px-6 py-4">Bid Number</th>
-                <th className="whitespace-nowrap px-6 py-4">Created By</th>
+                {/* <th className="whitespace-nowrap px-6 py-4"></th> */}
+                {/* <th className="whitespace-nowrap px-6 py-4">Created By</th> */}
                 <th className="whitespace-nowrap px-6 py-4">Response</th>
-                <th className="whitespace-nowrap px-6 py-4">Assigned Staff</th>
-                <th className="whitespace-nowrap px-6 py-4">Details</th>
-                <th className="whitespace-nowrap px-6 py-4">Material Weight</th>
+                <th className="whitespace-nowrap px-6 py-4">
+                  Assigned <br /> Staff
+                </th>
+                {/* <th className="whitespace-nowrap px-6 py-4">Details</th> */}
+                <th className="whitespace-nowrap px-6 py-4">
+                  Material <br /> Weight <br />
+                  (in Kg)
+                </th>
                 <th className="whitespace-nowrap px-6 py-4">Actions</th>
               </tr>
             </thead>
             <tbody>
               {bids.map((bid) => (
                 <React.Fragment key={bid.id}>
-                  <tr className="border-b text-sm">
+                  <tr className="border-b text-sm font-semibold">
                     <td className="px-6 py-4">{bid.id}</td>
+                    <td className="px-6 py-4">
+                      {bid.bidNumber} <br /> {bid.createdBy}
+                    </td>
+
                     <td className="px-6 py-4">
                       {bid.date}
                       <br />
@@ -169,21 +184,24 @@ export default function BidList() {
                     <td className="px-6 py-4 text-orange-500">
                       {bid.remaining}
                     </td>
-                    <td className="px-6 py-4">{bid.fromCity}</td>
-                    <td className="px-6 py-4">{bid.toCity}</td>
-                    <td className="px-6 py-4">{bid.vehicleType}</td>
                     <td className="px-6 py-4">
-                      {bid.body}, {bid.vehicles}
+                      {bid.fromCity} &nbsp; &nbsp; &nbsp; &nbsp;{" "}
+                      <i class="bi bi-arrow-down"></i> <br />
+                      {bid.toCity}
                     </td>
-                    <td className="px-6 py-4">{bid.bidNumber}</td>
-                    <td className="px-6 py-4">{bid.createdBy}</td>
+                    {/* <td className="px-6 py-4"></td> */}
+                    <td className="px-6 py-4">
+                      {bid.vehicleType} <br /> {bid.body}, {bid.vehicles}
+                    </td>
+                    {/* <td className="px-6 py-4"></td> */}
+                    {/* <td className="px-6 py-4">{bid.createdBy}</td> */}
                     <td className="px-6 py-4">
                       <button className="text-blue-600 hover:underline">
                         {bid.responses} View results
                       </button>
                     </td>
                     <td className="px-6 py-4">{bid.assignedStaff}</td>
-                    <td className="px-6 py-4">{bid.staffId}</td>
+                    {/* <td className="px-6 py-4">{bid.staffId}</td> */}
                     <td className="px-6 py-4">{bid.weight}</td>
                     <td className="px-6 py-4">
                       <button
@@ -195,12 +213,11 @@ export default function BidList() {
                         {showDetails === bid.id ? (
                           <>
                             View less
-                            <ChevronUp className="h-4 w-4" />
+                            <i class="bi bi-caret-up-fill"></i>
                           </>
                         ) : (
                           <>
-                            View Details
-                            <ChevronDown className="h-4 w-4" />
+                            View Details <i class="bi bi-caret-down-fill"></i>
                           </>
                         )}
                       </button>

@@ -33,8 +33,9 @@ export default function Layout({ children }) {
             <Link
               key={item.path}
               to={item.path}
-              className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100"
+              className="flex items-center text-lg font-normal px-4 py-3 text-gray-600 hover:bg-gray-100"
             >
+              <i class="bi bi-grid-fill"></i> &nbsp;
               {item.title}
             </Link>
           ))}
