@@ -24,12 +24,15 @@ export default function CreateBidForm() {
     loadingPoint: "",
     unloadingPoint: "",
     vehicleType: "",
+    vehicleft: "",
+    vehicleBody: "",
     fuelType: "",
     phoneNumber: "",
     material: "",
     weight: "",
     targetPrice: "",
     requestDate: "",
+    remaining: "",
     expiryDate: "",
     numberOfBidders: "",
     remarks: "",
@@ -100,6 +103,7 @@ export default function CreateBidForm() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Enter bid number"
+                  required
                 />
               </div>
             </div>
@@ -116,6 +120,7 @@ export default function CreateBidForm() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Bid Create Person Name."
+                  required
                 />
               </div>
             </div>
@@ -131,6 +136,7 @@ export default function CreateBidForm() {
                   value={formData.loadingDate}
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  required
                 />
               </div>
             </div>
@@ -148,6 +154,7 @@ export default function CreateBidForm() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Enter staff name"
+                  required
                 />
               </div>
             </div>
@@ -165,6 +172,7 @@ export default function CreateBidForm() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Enter phone number"
+                  required
                 />
               </div>
             </div>
@@ -181,6 +189,7 @@ export default function CreateBidForm() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="No. of Response ."
+                  required
                 />
               </div>
             </div>
@@ -203,6 +212,7 @@ export default function CreateBidForm() {
                     onChange={handleChange}
                     className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     placeholder="Enter loading point"
+                    required
                   />
                 </div>
               </div>
@@ -220,6 +230,7 @@ export default function CreateBidForm() {
                     onChange={handleChange}
                     className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     placeholder="Enter unloading point"
+                    required
                   />
                 </div>
               </div>
@@ -241,11 +252,28 @@ export default function CreateBidForm() {
                     value={formData.vehicleType}
                     onChange={handleChange}
                     className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    required
                   >
+                    {" "}
                     <option value="">Select vehicle type</option>
-                    <option value="20ft">20 ft Truck(Close Body)</option>
-                    <option value="24ft">24 ft Truck(Close Body)</option>
-                    <option value="32ft">32 ft Truck(Close Body)</option>
+                    <option value="Truck">Truck</option>
+                    <option value="Bus">Bus</option>
+                  </select>
+                </div>
+
+                <div className="relative">
+                  <Truck className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                  <select
+                    name="vehicleft"
+                    value={formData.vehicleft}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    required
+                  >
+                    <option value="">Select vehicle ft</option>
+                    <option value="20ft">20 ft</option>
+                    <option value="24ft">24 ft</option>
+                    <option value="32ft">32 ft</option>
                   </select>
                 </div>
               </div>
@@ -264,10 +292,28 @@ export default function CreateBidForm() {
                         checked={formData.fuelType === fuel}
                         onChange={handleChange}
                         className="h-4 w-4 text-blue-600"
+                        required
                       />
                       <span className="text-sm">{fuel}</span>
                     </label>
                   ))}
+                </div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Body Type
+                </label>
+                <div className="relative">
+                  <Truck className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                  <select
+                    name="vehicleBody"
+                    value={formData.vehicleBody}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    required
+                  >
+                    <option value="">Select vehicle ft</option>
+                    <option value="Close Body">(Close Body)</option>
+                    <option value="Open Body">(Open Body)</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -288,6 +334,7 @@ export default function CreateBidForm() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Enter material type"
+                  required
                 />
               </div>
             </div>
@@ -305,6 +352,7 @@ export default function CreateBidForm() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Enter weight"
+                  required
                 />
               </div>
             </div>
@@ -322,6 +370,7 @@ export default function CreateBidForm() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Enter target price"
+                  required
                 />
               </div>
             </div>
@@ -339,6 +388,24 @@ export default function CreateBidForm() {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Enter number of bidders"
+                  required
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Bid Time Remaining
+              </label>
+              <div className="relative">
+                <Clock className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  name="remaining"
+                  value={formData.remaining}
+                  onChange={handleChange}
+                  className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="7 Hours 14 min"
+                  required
                 />
               </div>
             </div>
@@ -358,6 +425,7 @@ export default function CreateBidForm() {
                   value={formData.requestDate}
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  required
                 />
               </div>
             </div>
@@ -374,6 +442,7 @@ export default function CreateBidForm() {
                   value={formData.expiryDate}
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  required
                 />
               </div>
             </div>
@@ -391,6 +460,7 @@ export default function CreateBidForm() {
               rows={4}
               className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               placeholder="Enter any additional remarks"
+              required
             />
           </div>
 

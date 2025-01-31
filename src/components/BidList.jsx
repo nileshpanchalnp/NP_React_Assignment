@@ -12,6 +12,7 @@ export default function BidList() {
   const [activeTab, setActiveTab] = useState("live");
   const navigate = useNavigate();
   const [bids, setBids] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const storedBids = JSON.parse(localStorage.getItem("bidsData")) || [];
@@ -21,6 +22,13 @@ export default function BidList() {
   const toggleDetails = (id) => {
     setShowDetails((prevId) => (prevId === id ? null : id)); // Close other bid details when toggling
   };
+  const filteredBids = bids.filter(
+    (bid) =>
+      bid.bidNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bid.loadingPoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bid.unloadingPoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bid.vehicleType.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
@@ -49,8 +57,8 @@ export default function BidList() {
                 onClick={() => setActiveTab("responded")}
                 className={`px-4 py-2 text-sm font-medium transition-colors ${
                   activeTab === "responded"
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-600 hover:bg-gray-50"
+                    ? "bg-blue-600 text-green-500"
+                    : "text-green-600 hover:bg-gray-50"
                 }`}
               >
                 Responded (30)
@@ -59,8 +67,8 @@ export default function BidList() {
                 onClick={() => setActiveTab("unresponded")}
                 className={`px-4 py-2 text-sm font-medium transition-colors ${
                   activeTab === "unresponded"
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-600 hover:bg-gray-50"
+                    ? "bg-blue-600 text-red-500"
+                    : "text-red-500 hover:bg-gray-50"
                 } rounded-r-lg`}
               >
                 Unresponded (30)
@@ -95,6 +103,8 @@ export default function BidList() {
                 type="text"
                 placeholder="Search"
                 className="w-full rounded-lg border bg-white pl-10 pr-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
           </div>
@@ -137,19 +147,19 @@ export default function BidList() {
               </tr>
             </thead>
             <tbody>
-              {bids.length === 0 ? (
+              {filteredBids.length === 0 ? (
                 <tr>
                   <td colSpan="10" className="text-center py-4 text-gray-500">
                     No data available
                   </td>
                 </tr>
               ) : (
-                bids.map((bid, index) => (
+                filteredBids.map((bid, index) => (
                   <React.Fragment key={bid.id}>
                     <tr className="border-b text-sm font-semibold">
                       <td className="px-3 py-4">{index + 1}</td>
                       <td className="px-3 py-4">
-                        {bid.bidNo} <br /> {bid.createdBy}
+                        #{bid.bidNo} <br /> {bid.bidNoCreateBy}
                       </td>
                       <td className="px-3 py-4">
                         {bid.loadingDate}
@@ -165,7 +175,8 @@ export default function BidList() {
                         {bid.unloadingPoint}
                       </td>
                       <td className="px-3 py-4">
-                        {bid.vehicleType} <br /> {bid.body}, {bid.vehicles}
+                        {bid.vehicleType} {bid.vehicleft},
+                        <br /> {bid.vehicleBody}
                       </td>
                       <td className="px-3 py-4">
                         <button className="text-blue-600 hover:underline">
@@ -208,35 +219,97 @@ export default function BidList() {
                                 <div className="space-y-4">
                                   <div>
                                     <h3 className="font-medium text-gray-900">
-                                      Bid No: {bid.bidNo} ({bid.bidNoCreateBy})
+                                      Bid No: #{bid.bidNo} ({bid.bidNoCreateBy})
                                     </h3>
                                   </div>
                                   <div>
                                     <h3 className="font-medium text-gray-900">
-                                      Loading Point:
+                                      <i class="bi bi-circle-fill text-green-600"></i>{" "}
+                                      <span className="text-green-600">
+                                        Loading Point
+                                      </span>
+                                      :{" "}
+                                      <span className="text-sky-600 text-lg">
+                                        {bid.loadingPoint}
+                                      </span>
                                     </h3>
-                                    <p className="text-gray-600">
-                                      {bid.loadingPoint}
-                                    </p>
-                                  </div>
-                                  <div>
-                                    <h3 className="font-medium text-gray-900">
-                                      Unloading Point:
-                                    </h3>
-                                    <p className="text-gray-600">
-                                      {bid.unloadingPoint}
-                                    </p>
                                   </div>
 
                                   <div>
                                     <h3 className="font-medium text-gray-900">
-                                      Number of Bidders for this Bid:{" "}
-                                      {bid.numberOfBidders}
+                                      <i class="bi bi-geo-alt-fill text-red-600"></i>{" "}
+                                      <span className="text-red-600">
+                                        Unloading Point:
+                                      </span>{" "}
+                                      <span className="text-sky-600 text-lg">
+                                        {bid.unloadingPoint}
+                                      </span>
+                                    </h3>
+                                  </div>
+                                  <div className="space-y-4">
+                                    <div>
+                                      <h3 className="font-medium text-gray-900">
+                                        <i className="bi bi-bar-chart-line"></i>{" "}
+                                        Remarks:{" "}
+                                        <span className="text-sky-600">
+                                          {bid.remarks}
+                                        </span>
+                                      </h3>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="space-y-4">
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      <i className="bi bi-calendar2-event-fill"></i>{" "}
+                                      Vehicle loading date:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.loadingDate}
+                                      </span>
                                     </h3>
                                   </div>
                                   <div>
                                     <h3 className="font-medium text-gray-900">
-                                      Target Price: {bid.targetPrice}
+                                      <i className="bi bi-truck"></i> Vehicle
+                                      Type:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.vehicleType} {bid.vehicleft},
+                                        {bid.vehicleBody} ({bid.fuelType})
+                                      </span>
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <span className="font-medium text-gray-900">
+                                      <i className="bi bi-box-seam-fill"></i>{" "}
+                                      Material:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.material}
+                                      </span>
+                                    </span>{" "}
+                                    &nbsp;
+                                    <span className="font-medium text-gray-900">
+                                      Weight:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.weight} Tonnes
+                                      </span>
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      <i class="bi bi-calendar2-event-fill"></i>{" "}
+                                      RequestDate:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.requestDate}
+                                      </span>
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      <i class="bi bi-calendar2-event-fill"></i>{" "}
+                                      ExpiryDate:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.expiryDate}
+                                      </span>
                                     </h3>
                                   </div>
                                 </div>
@@ -255,73 +328,25 @@ export default function BidList() {
                                       <i className="bi bi-telephone-fill"></i>{" "}
                                       Phone number:{" "}
                                       <span className="text-sky-600">
-                                        {bid.phoneNumber}
+                                        +91 {bid.phoneNumber}
                                       </span>
                                     </h3>
                                   </div>
                                   <div>
                                     <h3 className="font-medium text-gray-900">
-                                      <i className="bi bi-calendar2-event-fill"></i>{" "}
-                                      Vehicle loading date:{" "}
-                                      <span className="text-sky-600">
-                                        {bid.loadingDate}
+                                      Number of Bidders for this Bid:{" "}
+                                      <span className="text-sky-600 text-lg">
+                                        {bid.numberOfBidders}
                                       </span>
                                     </h3>
                                   </div>
                                   <div>
                                     <h3 className="font-medium text-gray-900">
-                                      <i className="bi bi-truck"></i> Vehicle
-                                      Type:{" "}
-                                      <span className="text-sky-600">
-                                        {bid.vehicleDetails} ({bid.fuelType})
+                                      Target Price:{" "}
+                                      <span className="text-sky-600 text-lg">
+                                        Rs {bid.targetPrice}
                                       </span>
                                     </h3>
-                                  </div>
-                                </div>
-                                <div className="space-y-4">
-                                  <div>
-                                    <h3 className="font-medium text-gray-900">
-                                      <i className="bi bi-box-seam-fill"></i>{" "}
-                                      Material:{" "}
-                                      <span className="text-sky-600">
-                                        {bid.material}
-                                      </span>
-                                    </h3>
-                                  </div>
-                                  <div>
-                                    <h3 className="font-medium text-gray-900">
-                                      Weight:{" "}
-                                      <span className="text-sky-600">
-                                        {bid.weight}
-                                      </span>
-                                    </h3>
-                                  </div>
-                                  <div>
-                                    <h3 className="font-medium text-gray-900">
-                                      RequestDate:{" "}
-                                      <span className="text-sky-600">
-                                        {bid.requestDate}
-                                      </span>
-                                    </h3>
-                                  </div>
-                                  <div>
-                                    <h3 className="font-medium text-gray-900">
-                                      ExpiryDate:{" "}
-                                      <span className="text-sky-600">
-                                        {bid.expiryDate}
-                                      </span>
-                                    </h3>
-                                  </div>
-                                </div>
-                                <div className="space-y-4">
-                                  <div>
-                                    <h3 className="font-medium text-gray-900">
-                                      <i className="bi bi-bar-chart-line"></i>{" "}
-                                      Price Range:
-                                    </h3>
-                                    <p className="text-gray-600">
-                                      {bid.priceRange}
-                                    </p>
                                   </div>
                                 </div>
                               </div>
