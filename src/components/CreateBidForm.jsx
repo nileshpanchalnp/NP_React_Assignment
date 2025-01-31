@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   ArrowLeft,
@@ -18,7 +17,9 @@ export default function CreateBidForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     bidNo: "",
+    bidNoCreateBy: "",
     loadingDate: "",
+    response: "",
     assignedStaff: "",
     loadingPoint: "",
     unloadingPoint: "",
@@ -34,21 +35,37 @@ export default function CreateBidForm() {
     remarks: "",
   });
 
- const handleSubmit = (e) => {
-   e.preventDefault();
-   // Handle form submission
-   console.log(formData);
-   // Navigate back to bids list
-   navigate("/bids");
- };
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-};
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
+    // Get existing bids data from localStorage and handle potential errors
+    let bidsData = [];
+    try {
+      bidsData = JSON.parse(localStorage.getItem("bidsData")) || [];
+    } catch (error) {
+      console.error("Error parsing bids data:", error);
+      // Optionally, you can handle this error by initializing bidsData as an empty array if parsing fails
+      bidsData = [];
+    }
+
+    // Add new bid data to the array
+    bidsData.push(formData);
+
+    // Save the updated bidsData array back to localStorage
+    localStorage.setItem("bidsData", JSON.stringify(bidsData));
+
+    alert("Bids Data created successfully");
+    navigate("/bids");
+    console.log("Bids Data created successfully!", formData);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
@@ -86,7 +103,22 @@ const handleChange = (e) => {
                 />
               </div>
             </div>
-
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Bid Create Person Name.
+              </label>
+              <div className="relative">
+                <FileText className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  name="bidNoCreateBy"
+                  value={formData.bidNoCreateBy}
+                  onChange={handleChange}
+                  className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="Bid Create Person Name."
+                />
+              </div>
+            </div>
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
                 Vehicle Loading Date
@@ -133,6 +165,22 @@ const handleChange = (e) => {
                   onChange={handleChange}
                   className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Enter phone number"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                No. of Response
+              </label>
+              <div className="relative">
+                <FileText className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="number"
+                  name="response"
+                  value={formData.response}
+                  onChange={handleChange}
+                  className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="No. of Response ."
                 />
               </div>
             </div>
@@ -195,9 +243,9 @@ const handleChange = (e) => {
                     className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   >
                     <option value="">Select vehicle type</option>
-                    <option value="20ft">20 ft Truck</option>
-                    <option value="24ft">24 ft Truck</option>
-                    <option value="32ft">32 ft Truck</option>
+                    <option value="20ft">20 ft Truck(Close Body)</option>
+                    <option value="24ft">24 ft Truck(Close Body)</option>
+                    <option value="32ft">32 ft Truck(Close Body)</option>
                   </select>
                 </div>
               </div>

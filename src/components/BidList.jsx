@@ -1,52 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Custom.css";
-import { Calendar, Search, ChevronDown } from "lucide-react";
+import { Calendar, Search, ChevronDown, ChevronUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function BidList() {
-  // const [showDetails, setShowDetails] = (useState < number) | (null > null);
-  const [showDetails, setShowDetails] = useState(null);
-
+  const [showDetails, setShowDetails] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
   const [activeTab, setActiveTab] = useState("live");
   const navigate = useNavigate();
+  const [bids, setBids] = useState([]);
 
-  const bids = [
-    {
-      id: 1,
-      date: "14/02/2024",
-      time: "05:40 Pm",
-      remaining: "7hr 20min",
-      fromCity: "Gurgaon",
-      toCity: "Mumbai",
-      vehicleType: "Truck, 20 ft",
-      body: "Close body",
-      vehicles: 1,
-      bidNumber: "#122345678123",
-      createdBy: "Sunder Yadav",
-      responses: 4,
-      assignedStaff: "Mohit",
-      staffId: "5215001161264",
-      weight: "4000 Kg",
-      loadingPoint: "Ramchandra Ramniwas oil mill, Alwar, Rajasthan",
-      unloadingPoint: "Manesar, Gurugram, Haryana",
-      targetPrice: "₹5000",
-      vehicleLoadingDate: "17/02/2024",
-      vehicleDetails: "20 ft Truck (Close Body)",
-      fuelType: "CNG",
-      material: "Agricultural Products",
-      materialWeight: "14 Tonnes",
-      requestDate: "15/02/2024",
-      expiryDate: "15/02/2024",
-      numberOfBidders: 54,
-      remarks: "Urgent Delivery",
-      phoneNumber: "+91 332423442442",
-    },
-    // Add more bids with similar structure
-  ];
+  useEffect(() => {
+    const storedBids = JSON.parse(localStorage.getItem("bidsData")) || [];
+    setBids(storedBids);
+  }, []);
+
+  const toggleDetails = (id) => {
+    setShowDetails((prevId) => (prevId === id ? null : id)); // Close other bid details when toggling
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
@@ -58,7 +32,7 @@ export default function BidList() {
               onClick={() => navigate("/create-bid")}
               className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Create <i class="bi bi-plus-square-fill"></i>
+              Create <i className="bi bi-plus-square-fill"></i>
             </button>
             <div className="flex rounded-lg bg-white shadow">
               <button
@@ -130,36 +104,31 @@ export default function BidList() {
       {/* Bids Table */}
       <div className="rounded-lg bg-white shadow">
         <div className="overflow-x-auto">
-          <table className="w-full  border-collapse">
+          <table className="w-full border-collapse">
             <thead>
               <tr className="border-b rounded-xl text-left text-sm table-header-color font-medium text-white">
-                <th className="whitespace-nowrap  px-3 py-4">S No.</th>
+                <th className="whitespace-nowrap px-3 py-4">S No.</th>
                 <th className="whitespace-nowrap px-3 py-4">
-                  Bid Number <br /> create by
+                  Bid Number <br /> Created by
                 </th>
-
                 <th className="whitespace-nowrap px-3 py-4">
                   Start Date <br /> & Time
                 </th>
                 <th className="whitespace-nowrap px-3 py-4">
                   Bid Time <br /> Remaining
                 </th>
-                <th className="whitespace-nowrap px-3 py-4 ">
+                <th className="whitespace-nowrap px-3 py-4">
                   From city <br />
-                  to city
+                  To city
                 </th>
-                {/* <th className="whitespace-nowrap px-3 py-4">To city</th> */}
                 <th className="whitespace-nowrap px-3 py-4">
                   Vehicle Type, <br /> Size, Body,
-                  <br /> No. of Vehicle
+                  <br /> No. of Vehicles
                 </th>
-                {/* <th className="whitespace-nowrap px-3 py-4"></th> */}
-                {/* <th className="whitespace-nowrap px-3 py-4">Created By</th> */}
                 <th className="whitespace-nowrap px-3 py-4">Response</th>
                 <th className="whitespace-nowrap px-3 py-4">
                   Assigned <br /> Staff
                 </th>
-                {/* <th className="whitespace-nowrap px-3 py-4">Details</th> */}
                 <th className="whitespace-nowrap px-3 py-4">
                   Material <br /> Weight <br />
                   (in Kg)
@@ -168,203 +137,202 @@ export default function BidList() {
               </tr>
             </thead>
             <tbody>
-              {bids.map((bid) => (
-                <React.Fragment key={bid.id}>
-                  <tr className="border-b text-sm font-semibold">
-                    <td className="px-3 py-4">{bid.id}</td>
-                    <td className="px-3 py-4">
-                      {bid.bidNumber} <br /> {bid.createdBy}
-                    </td>
+              {bids.length === 0 ? (
+                <tr>
+                  <td colSpan="10" className="text-center py-4 text-gray-500">
+                    No data available
+                  </td>
+                </tr>
+              ) : (
+                bids.map((bid, index) => (
+                  <React.Fragment key={bid.id}>
+                    <tr className="border-b text-sm font-semibold">
+                      <td className="px-3 py-4">{index + 1}</td>
+                      <td className="px-3 py-4">
+                        {bid.bidNo} <br /> {bid.createdBy}
+                      </td>
+                      <td className="px-3 py-4">
+                        {bid.loadingDate}
+                        <br />
+                        {bid.time}
+                      </td>
+                      <td className="px-3 py-4 text-orange-500">
+                        {bid.remaining}
+                      </td>
+                      <td className="px-3 py-4">
+                        {bid.loadingPoint} <br /> &nbsp; &nbsp;&nbsp;
+                        <i className="bi bi-arrow-down"></i> <br />
+                        {bid.unloadingPoint}
+                      </td>
+                      <td className="px-3 py-4">
+                        {bid.vehicleType} <br /> {bid.body}, {bid.vehicles}
+                      </td>
+                      <td className="px-3 py-4">
+                        <button className="text-blue-600 hover:underline">
+                          {bid.response} View results
+                        </button>
+                      </td>
+                      <td className="px-3 py-4">
+                        {bid.assignedStaff} <br />
+                        {bid.staffId}
+                      </td>
+                      <td className="px-3 py-4">{bid.weight}</td>
+                      <td className="px-3 py-4">
+                        <button
+                          onClick={() => toggleDetails(bid.bidNo)}
+                          className="flex items-center gap-1 text-blue-600 hover:underline"
+                        >
+                          {showDetails === bid.bidNo
+                            ? "View less"
+                            : "View Details"}
+                          {showDetails === bid.bidNo ? (
+                            <ChevronUp />
+                          ) : (
+                            <ChevronDown />
+                          )}
+                        </button>
+                      </td>
+                    </tr>
+                    <AnimatePresence>
+                      {showDetails === bid.bidNo && (
+                        <tr>
+                          <td colSpan={14}>
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden bg-sky-100"
+                            >
+                              <div className="grid gap-6 p-6 md:grid-cols-3">
+                                <div className="space-y-4">
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      Bid No: {bid.bidNo} ({bid.bidNoCreateBy})
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      Loading Point:
+                                    </h3>
+                                    <p className="text-gray-600">
+                                      {bid.loadingPoint}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      Unloading Point:
+                                    </h3>
+                                    <p className="text-gray-600">
+                                      {bid.unloadingPoint}
+                                    </p>
+                                  </div>
 
-                    <td className="px-3 py-4">
-                      {bid.date}
-                      <br />
-                      {bid.time}
-                    </td>
-                    <td className="px-3 py-4 text-orange-500">
-                      {bid.remaining}
-                    </td>
-                    <td className="px-3 py-4">
-                      {bid.fromCity} <br /> &nbsp; &nbsp;&nbsp;
-                      <i class="bi bi-arrow-down"></i> <br />
-                      {bid.toCity}
-                    </td>
-                    {/* <td className="px-3 py-4"></td> */}
-                    <td className="px-3 py-4">
-                      {bid.vehicleType} <br /> {bid.body}, {bid.vehicles}
-                    </td>
-                    {/* <td className="px-3 py-4"></td> */}
-                    {/* <td className="px-3 py-4">{bid.createdBy}</td> */}
-                    <td className="px-3 py-4">
-                      <button className="text-blue-600 hover:underline">
-                        {bid.responses} View results
-                      </button>
-                    </td>
-                    <td className="px-3 py-4">
-                      {bid.assignedStaff} <br />
-                      {bid.staffId}
-                    </td>
-                    {/* <td className="px-3 py-4">{bid.staffId}</td> */}
-                    <td className="px-3 py-4">{bid.weight}</td>
-                    <td className="px-3 py-4">
-                      <button
-                        onClick={() =>
-                          setShowDetails(showDetails === bid.id ? null : bid.id)
-                        }
-                        className="flex items-center gap-1 text-blue-600 hover:underline"
-                      >
-                        {showDetails === bid.id ? (
-                          <>
-                            View less
-                            <i class="bi bi-caret-up-fill"></i>
-                          </>
-                        ) : (
-                          <>
-                            View Details <i class="bi bi-caret-down-fill"></i>
-                          </>
-                        )}
-                      </button>
-                    </td>
-                  </tr>
-                  <AnimatePresence>
-                    {showDetails === bid.id && (
-                      <tr>
-                        <td colSpan={14}>
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden bg-sky-100"
-                          >
-                            <div className="grid gap-6 p-6 md:grid-cols-4">
-                              <div className="space-y-4">
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Bid No: {bid.bidNumber} ({bid.createdBy})
-                                  </h3>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      Number of Bidders for this Bid:{" "}
+                                      {bid.numberOfBidders}
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      Target Price: {bid.targetPrice}
+                                    </h3>
+                                  </div>
                                 </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Loading Point:
-                                  </h3>
-                                  <p className="text-gray-600">
-                                    {bid.loadingPoint}
-                                  </p>
+                                <div className="space-y-4">
+                                  <div>
+                                    <p className="font-medium text-gray-900">
+                                      <i className="bi bi-person-fill"></i>{" "}
+                                      Assigned Staff :{" "}
+                                      <span className="text-sky-600">
+                                        {bid.assignedStaff}
+                                      </span>
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      <i className="bi bi-telephone-fill"></i>{" "}
+                                      Phone number:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.phoneNumber}
+                                      </span>
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      <i className="bi bi-calendar2-event-fill"></i>{" "}
+                                      Vehicle loading date:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.loadingDate}
+                                      </span>
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      <i className="bi bi-truck"></i> Vehicle
+                                      Type:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.vehicleDetails} ({bid.fuelType})
+                                      </span>
+                                    </h3>
+                                  </div>
                                 </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Unloading Point:
-                                  </h3>
-                                  <p className="text-gray-600">
-                                    {bid.unloadingPoint}
-                                  </p>
+                                <div className="space-y-4">
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      <i className="bi bi-box-seam-fill"></i>{" "}
+                                      Material:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.material}
+                                      </span>
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      Weight:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.weight}
+                                      </span>
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      RequestDate:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.requestDate}
+                                      </span>
+                                    </h3>
+                                  </div>
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      ExpiryDate:{" "}
+                                      <span className="text-sky-600">
+                                        {bid.expiryDate}
+                                      </span>
+                                    </h3>
+                                  </div>
                                 </div>
-
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Number of Bidders for this Bid:{" "}
-                                    {bid.numberOfBidders}
-                                  </h3>
-                                </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Target Price: {bid.targetPrice}
-                                  </h3>
-                                </div>
-                              </div>
-                              <div className="space-y-4">
-                                <div>
-                                  <p className="font-medium text-gray-900">
-                                    <i class="bi bi-person-fill"></i> Assigned
-                                    Staff :{" "}
-                                    <span className="text-sky-600">
-                                      {bid.assignedStaff}
-                                    </span>
-                                  </p>
-                                </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    <i class="bi bi-telephone-fill"></i> Phone
-                                    number:{" "}
-                                    <span className="text-sky-600">
-                                      {bid.phoneNumber}
-                                    </span>
-                                  </h3>
-                                </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    <i class="bi bi-calendar2-event-fill"></i>{" "}
-                                    Vehicle loading date:{" "}
-                                    <span className="text-sky-600">
-                                      {bid.vehicleLoadingDate}
-                                    </span>
-                                  </h3>
-                                </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    <i class="bi bi-truck"></i> Vehicle Type:{" "}
-                                    <span className="text-sky-600">
-                                      {bid.vehicleDetails} ({bid.fuelType})
-                                    </span>
-                                  </h3>
+                                <div className="space-y-4">
+                                  <div>
+                                    <h3 className="font-medium text-gray-900">
+                                      <i className="bi bi-bar-chart-line"></i>{" "}
+                                      Price Range:
+                                    </h3>
+                                    <p className="text-gray-600">
+                                      {bid.priceRange}
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
-                              <div className="space-y-4">
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    <i class="bi bi-box-seam-fill"></i>{" "}
-                                    Material:{" "}
-                                    <sky className="text-sky-600">
-                                      {bid.material}
-                                    </sky>
-                                  </h3>
-                                </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Weight:{" "}
-                                    <span className="text-sky-600">
-                                      {bid.materialWeight}
-                                    </span>
-                                  </h3>
-                                </div>
-                              </div>
-                              <div className="space-y-4">
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    <i class="bi bi-calendar2-event-fill"></i>{" "}
-                                    Request Date:{" "}
-                                    <span className="text-sky-600">
-                                      {bid.requestDate}
-                                    </span>
-                                  </h3>
-                                </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    <i class="bi bi-calendar2-event-fill"></i>{" "}
-                                    Expiry Date:{" "}
-                                    <span className="text-sky-600">
-                                      {bid.expiryDate}
-                                    </span>
-                                  </h3>
-                                </div>
-                                <div>
-                                  <h3 className="font-medium text-gray-900">
-                                    Remarks:{" "}
-                                    <span className="text-sky-600">
-                                      {bid.remarks}
-                                    </span>
-                                  </h3>
-                                </div>
-                              </div>
-                            </div>
-                          </motion.div>
-                        </td>
-                      </tr>
-                    )}
-                  </AnimatePresence>
-                </React.Fragment>
-              ))}
+                            </motion.div>
+                          </td>
+                        </tr>
+                      )}
+                    </AnimatePresence>
+                  </React.Fragment>
+                ))
+              )}
             </tbody>
           </table>
         </div>

@@ -7,7 +7,7 @@ export default function Layout({ children }) {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   const navItems = [
-    { title: "Bid", path: "/bid" },
+    { title: "Bid", path: "/bids" },
     { title: "POD", path: "/pod" },
     { title: "Vendor", path: "/vendor" },
     { title: "User", path: "/user" },
