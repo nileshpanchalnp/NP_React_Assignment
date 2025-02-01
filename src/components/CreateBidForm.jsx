@@ -22,7 +22,9 @@ export default function CreateBidForm() {
     response: "",
     assignedStaff: "",
     loadingPoint: "",
+    loadingPointAdd:"",
     unloadingPoint: "",
+    unloadingPointAdd:"",
     vehicleType: "",
     vehicleft: "",
     vehicleBody: "",
@@ -215,6 +217,18 @@ export default function CreateBidForm() {
                     required
                   />
                 </div>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    name="loadingPointAdd"
+                    value={formData.loadingPointAdd}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="Enter loading point Company Address"
+                    required
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -230,6 +244,18 @@ export default function CreateBidForm() {
                     onChange={handleChange}
                     className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     placeholder="Enter unloading point"
+                    required
+                  />
+                </div>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    name="unloadingPointAdd"
+                    value={formData.unloadingPointAdd}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-gray-300 px-10 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="Enter unloading point Company Address"
                     required
                   />
                 </div>

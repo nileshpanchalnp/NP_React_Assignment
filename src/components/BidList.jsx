@@ -161,7 +161,11 @@ export default function BidList() {
                 filteredBids.map((bid, index) => (
                   <React.Fragment key={bid.id}>
                     <tr className="border-b text-sm font-semibold">
-                      <td className="px-3 py-4">{index + 1}</td>
+                      <td className="px-3 py-4">
+                        <i class="bi bi-circle-fill text-xs text-green-500"></i>{" "}
+                        &nbsp;
+                        {index + 1}
+                      </td>
                       <td className="px-3 py-4">
                         #{bid.bidNo} <br />{" "}
                         <span className="text-gray-500">
@@ -239,6 +243,9 @@ export default function BidList() {
                                       <span className="text-sky-600 text-lg">
                                         {bid.loadingPoint}
                                       </span>
+                                      <p className="font-medium pl-7 text-gray-500">
+                                        {bid.loadingPointAdd}
+                                      </p>
                                     </h3>
                                   </div>
 
@@ -251,18 +258,10 @@ export default function BidList() {
                                       <span className="text-sky-600 text-lg">
                                         {bid.unloadingPoint}
                                       </span>
+                                      <p className="font-medium pl-7 text-gray-500">
+                                        {bid.unloadingPointAdd}
+                                      </p>
                                     </h3>
-                                  </div>
-                                  <div className="space-y-4">
-                                    <div>
-                                      <h3 className="font-medium text-gray-900">
-                                        <i class="bi bi-pencil-square"></i>{" "}
-                                        Remarks:{" "}
-                                        <span className="text-sky-600">
-                                          {bid.remarks}
-                                        </span>
-                                      </h3>
-                                    </div>
                                   </div>
                                 </div>
                                 <div className="space-y-4">
@@ -354,6 +353,17 @@ export default function BidList() {
                                         Rs {bid.targetPrice}
                                       </span>
                                     </h3>
+                                  </div>
+                                  <div className="space-y-4">
+                                    <div>
+                                      <h3 className="font-medium text-gray-900">
+                                        <i class="bi bi-pencil-square"></i>{" "}
+                                        Remarks:{" "}
+                                        <span className="text-sky-600">
+                                          {bid.remarks}
+                                        </span>
+                                      </h3>
+                                    </div>
                                   </div>
                                 </div>
                               </div>

@@ -34,7 +34,7 @@ export default function Layout({ children }) {
       >
         <div className="flex h-16 items-center justify-between px-5">
           <span className="text-xl font-bold">
-            <i class="bi bi-bullseye text-3xl"></i> LOGO
+            <i class="bi bi-bullseye text-3xl"></i> NP
           </span>
           <button onClick={() => setSidebarOpen(false)} className="md:hidden">
             <FiX className="h-6 w-6" />
