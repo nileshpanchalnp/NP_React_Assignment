@@ -1,3 +1,122 @@
+# Logistics Management System 🚛📦
+
+# Project Overview
+The Logistics Management System is a web-based application built using **React.js**. This system allows users to **manage bids, track shipments, and monitor logistics operations efficiently**. It includes a **responsive dashboard, user authentication, protected routes, bid tracking, and search functionality**. All data is stored and managed using localStorage.
+
+# Features
+✅ **User Authentication**: Signup and login functionality with localStorage. 
+
+✅ **Protected Routes**: Only authenticated users can access the dashboard and bid management pages.
+
+✅ **Dashboard**: Displays live bids and bid details.
+
+✅ **Search & Filtering**: Users can search for bidNo,bidNoCreateBy,material,loadingPoint,unloadingPoint,vehicleType and filter them.
+
+✅ **Bid Management**: View and manage bid responses.
+
+✅ **Local Data Storage**: All user and bid data are stored in localStorage.
+
+✅ **Responsive Design**: Optimized for all screen sizes (mobile, tablet, desktop).
+
+# Technical Specifications:
+  **Frontend**: React.js (React Router, Hooks, Tailwind CSS)
+  
+  **Data Storage**: localStorage
+  
+  **State Management**: React Hooks
+  
+  **Deployment**: Hosted on Vercel 
+
+  
+# Installation & Setup
+
+# 1. Clone the Repository
+git clone https://github.com/nileshpanchalnp/NP_React_Assignment.git
+
+cd np_frontend_assigm
+
+# 2. Install Dependencies
+npm install
+
+npm install react-router-dom
+
+npm install lucide-react
+
+npm install tailwindcss
+
+npm start
+
+# 3. Add a Link In index.html
+        <!-- tailwind css -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- boostap icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <!-- boostap link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    
+# How It Works
+# 1️⃣ Start the Project
+After running npm start, follow these steps:
+
+****
+# 2️⃣ Signup
+Enter Username, Email, and Password.
+
+Click Signup to create an account (data is stored in localStorage).
+
+****
+# 3️⃣ Login
+Enter Email and Password to log in.
+
+If credentials match stored data, you are redirected to the Dashboard.
+
+****
+# 4️⃣ Dashboard View
+Displays all created bids.
+
+Option to create new bids.
+
+****
+# 5️⃣ Create a New Bid
+Click Create Button to open the Create New Bid form.
+
+Fill in all required input fields (e.g., bid details, amount, description).
+
+Click Create Bid, and the new bid will appear on the Dashboard.
+
+
+****
+# 6️⃣ Data Storage
+All user details and bids are stored in localStorage for persistence.
+
+Refreshing the page won’t lose the data.
+
+# Project Demonstration
+📽 Loom Video: [Provide the Loom video link here]
+
+🌍 Live Demo: https://np-react-assignment.vercel.app/
+
+# Contributors
+**Nilesh Panchal** - Full-stack Developer
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
