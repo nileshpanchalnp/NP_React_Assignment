@@ -25,6 +25,8 @@ export default function BidList() {
   const filteredBids = bids.filter(
     (bid) =>
       bid.bidNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bid.bidNoCreateBy.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bid.material.toLowerCase().includes(searchQuery.toLowerCase()) ||
       bid.loadingPoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
       bid.unloadingPoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
       bid.vehicleType.toLowerCase().includes(searchQuery.toLowerCase())
@@ -36,12 +38,9 @@ export default function BidList() {
       <div className="mb-6 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => navigate("/create-bid")}
-              className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              Create <i className="bi bi-plus-square-fill"></i>
-            </button>
+            {/*  */}
+
+            {/*  */}
             <div className="flex rounded-lg bg-white shadow">
               <button
                 onClick={() => setActiveTab("live")}
@@ -74,9 +73,6 @@ export default function BidList() {
                 Unresponded (30)
               </button>
             </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
             <div className="relative">
               <button
                 onClick={() => setShowCalendar(!showCalendar)}
@@ -86,6 +82,7 @@ export default function BidList() {
                 <span>Today</span>
                 <ChevronDown className="h-4 w-4" />
               </button>
+
               {showCalendar && (
                 <div className="absolute right-0 z-10 mt-2 w-64 rounded-lg bg-white p-4 shadow-lg">
                   <div className="flex justify-between border-b pb-2">
@@ -97,12 +94,21 @@ export default function BidList() {
                 </div>
               )}
             </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => navigate("/create-bid")}
+              className="rounded-lg bg-blue-600 px-6 py-2.5 text-lm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Create <i className="bi bi-plus-square-fill"></i>
+            </button>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-600" />
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full rounded-lg border bg-white pl-10 pr-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border bg-white pl-10 pr-4 py-2 text-sm focus:border-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -159,7 +165,10 @@ export default function BidList() {
                     <tr className="border-b text-sm font-semibold">
                       <td className="px-3 py-4">{index + 1}</td>
                       <td className="px-3 py-4">
-                        #{bid.bidNo} <br /> {bid.bidNoCreateBy}
+                        #{bid.bidNo} <br />{" "}
+                        <span className="text-gray-500">
+                          {bid.bidNoCreateBy}
+                        </span>
                       </td>
                       <td className="px-3 py-4">
                         {bid.loadingDate}
@@ -249,7 +258,7 @@ export default function BidList() {
                                   <div className="space-y-4">
                                     <div>
                                       <h3 className="font-medium text-gray-900">
-                                        <i className="bi bi-bar-chart-line"></i>{" "}
+                                        <i class="bi bi-pencil-square"></i>{" "}
                                         Remarks:{" "}
                                         <span className="text-sky-600">
                                           {bid.remarks}

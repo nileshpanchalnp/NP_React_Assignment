@@ -24,6 +24,7 @@ export default function LoginPage() {
     if (matchedUser) {
       alert("Login successful!");
       localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("username", matchedUser.username);
       navigate("/bids"); // Redirect to the dashboard or home page
     } else {
       alert("Invalid email or password");

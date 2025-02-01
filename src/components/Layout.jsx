@@ -7,8 +7,8 @@ export default function Layout({ children }) {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   // Get user data from localStorage
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  const user = users.length > 0 ? users[0] : {}; // Get the first object
+  // const users = JSON.parse(localStorage.getItem("username")) || {};
+  const username = localStorage.getItem("username") || "Guest";
 
   const navItems = [
     { title: "Bid", path: "/bids" },
@@ -20,7 +20,6 @@ export default function Layout({ children }) {
 
   // Logout function
   const handleLogout = () => {
-    localStorage.removeItem("users"); // Remove user data from localStorage
     localStorage.removeItem("isLoggedIn");
     window.location.href = "/"; // Redirect to login page
   };
@@ -70,7 +69,7 @@ export default function Layout({ children }) {
                 className="flex items-center space-x-2 rounded-full bg-gray-100 p-2"
               >
                 <FiUser className="h-5 w-10" />
-                {user.username || "Guest"} {/* Display username or Guest */}
+                {username || "Guest"} {/* Display username or Guest */}
                 <FiChevronDown className="h-4 w-4" />
               </button>
 
