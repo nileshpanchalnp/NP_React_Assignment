@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import "./Custom.css";
 import { Calendar, Search, ChevronDown, ChevronUp } from "lucide-react";
